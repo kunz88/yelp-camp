@@ -10,23 +10,29 @@ app.get("/", async (_: Request, res: Response) => {
   res.render('campgrounds/index', { campgrounds });
 });
 
-
-app.post('/', async (req: Request, res: Response) => {
-  const campground = new CampgroundModel(req.body.campground);
-  await campground.save();
-  res.redirect(`/campgrounds/${campground._id}`)
+app.get('/new', (_: Request, res: Response) => {
+  res.render('campgrounds/new');
 })
+app.post('/',
+  body("title").trim().notEmpty(),
+  body("location").trim().notEmpty(),
+  checkValidation,
+  async (req: Request, res: Response) => {
+    const campground = new CampgroundModel(req.body.campground);
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`)
+  })
 
 app.put('/:id',
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const campground = await CampgroundModel.findByIdAndUpdate(id, { ... req.body.campground });
+    const campground = await CampgroundModel.findByIdAndUpdate(id, { ...req.body.campground });
     if (!campground) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.json(campground)
+    res.redirect(`/campgrounds/${campground._id}`)
   });
-  
+
 
 app.get("/:id",
   param("id").isMongoId(),
@@ -51,6 +57,18 @@ app.get("/:id/edit",
       return res.status(404).json({ message: "User not found" });
     }
     res.render('campgrounds/edit', { campground });
+  }
+);
+app.delete("/:id",
+  param("id").isMongoId(),
+  checkValidation,
+  async (req: Request, res: Response) => {
+    const campground = await CampgroundModel.findByIdAndDelete(matchedData(req).id);
+
+    if (!campground) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.redirect("/campgrounds/")
   }
 );
 
