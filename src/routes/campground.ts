@@ -13,8 +13,8 @@ app.get('/new', (_: Request, res: Response) => {
   res.render('campgrounds/new');
 })
 app.post('/',
-  body("title").trim().notEmpty(),
-  body("location").trim().notEmpty(),
+  body("campground[title]").trim().notEmpty(),
+  body("campground[location]").trim().notEmpty(),
   checkValidation,
   async (req: Request, res: Response) => {
     const campground = new CampgroundModel(req.body.campground);

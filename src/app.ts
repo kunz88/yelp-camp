@@ -25,8 +25,8 @@ connect(url) // connessione al database
   .catch((err) => {
     console.log(`Couldn't connect to MongoDB: ${err}`);
   });
-app.use(express.json()); // app.use permette di runnare una funzione su ogni richiesta
 app.use(methodOverride('_method'));
+app.use(express.json()); // app.use permette di runnare una funzione su ogni richiesta
 app.use("/campgrounds", campground); // uso della route
 
 app.use((_:Request,res:Response)=>{
