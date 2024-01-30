@@ -3,7 +3,6 @@ const app = express.Router();
 import { body, param, matchedData } from "express-validator";
 import { CampgroundModel } from "../models/campground";
 import { checkValidation } from "../middlewares/validations";
-import { Types } from "mongoose";
 
 app.get("/", async (_: Request, res: Response) => {
   const campgrounds = await CampgroundModel.find();

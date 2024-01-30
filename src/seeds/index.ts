@@ -21,11 +21,16 @@ connect(url)
     await CampgroundModel.deleteMany({})
     for(let i = 0; i < 50 ; i++){
         const random1000 = Math.floor(Math.random() * 1000);
+        const price = Math.floor(Math.random() * 30) + 10;
         const camp = new CampgroundModel({
             location:`${cities[random1000].city},${cities[random1000].state}`,
-            title: `${sample(descriptors)} ${sample(places)}`
-        })
-        await camp.save()// salvo il mio 
+            title: `${sample(descriptors)} ${sample(places)}`,
+            image: 'https://source.unsplash.com/collection/483251',
+            description:'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero doloribus molestiae illo cupiditate ullam earum, ea similique ipsam exercitationem deleniti corrupti quae expedita porro itaque sequi soluta suscipit corporis hic.',
+            price:price
+
+        }) 
+        await camp.save() 
     }
 
   }
@@ -33,3 +38,4 @@ connect(url)
   seedDB().then(()=>{
     connection.close()
   })
+  

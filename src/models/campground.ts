@@ -1,7 +1,8 @@
 import { Schema, model, Types, Date } from 'mongoose';
 export type TCampground = { // creo l'interfaccia da utilizzare come base per il mio schema mongoose
     title: string,
-    price: string,
+    price: number,
+    image:string,
     description: string,
     location: string
 
@@ -10,7 +11,8 @@ export type TCampground = { // creo l'interfaccia da utilizzare come base per il
 // creo uno schema mongoose
 const CampgroundSchema = new Schema<TCampground>({
     title: String,
-    price: String,
+    price: Number,
+    image:String,
     description: String,
     location: String
 })
