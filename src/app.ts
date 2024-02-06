@@ -3,6 +3,7 @@ import { connect } from 'mongoose';     // importo connessione e app express , i
 import path from 'path'
 import campground from './routes/campground'
 import methodOverride from 'method-override'
+import auth from './routes/auth';
 const ejsMate = require('ejs-mate');
 
 const app = express() // creo app express 
@@ -28,6 +29,7 @@ connect(url) // connessione al database
 app.use(methodOverride('_method'));
 app.use(express.json()); // app.use permette di runnare una funzione su ogni richiesta
 app.use("/campgrounds", campground); // uso della route
+app.use("/auth", auth);
 
 app.use((_:Request,res:Response)=>{
   res.status(404).send('NOT FOUND')
